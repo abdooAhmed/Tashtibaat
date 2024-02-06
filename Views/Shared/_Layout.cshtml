@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Text
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GpProject</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Profile.css" />
+    <link rel="stylesheet" href="~/css/sb-admin-2.css" />
+    <link rel="stylesheet" href="~/vendor/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/ReportStyle.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+    
+    @if (User.IsInRole("Admin"))
+    {
+        <link rel="stylesheet" href="~/css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+    }
+
+
+</head>
+<body>
+    <div id="wrapper">
+        
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                
+                <!-- Topbar -->
+
+
+
+
+
+                <div class="container">
+
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/js/sb-admin-2.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    @if (User.IsInRole("Admin"))
+    {
+        <script src="~/js/demo/chart-area-demo.js"></script>
+        <script src="~/js/demo/chart-pie-demo.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+        <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+        <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+        <link rel="stylesheet" type="text/css"
+              href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+                integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+                crossorigin=""></script>
+    }
+
+    @if (User.IsInRole("Admin"))
+    {
+        <script type="text/javascript">
+            // Initialize the map and assign it to a variable for later use
+            var map = L.map('map', {
+                // Set latitude and longitude of the map center (required)
+                center: [30.0382300000001, 31.2113000000001],
+                // Set the initial zoom level, values 0-18, where 0 is most zoomed-out (required)
+                zoom: 10
+            });
+
+            L.control.scale().addTo(map);
+
+            // Create a Tile Layer and add it to the map
+            //var tiles = new L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png').addTo(map);
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            L.circle([30.05661, 31.330108], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 700
+            }).addTo(map);
+            L.circle([30.037948, 31.208259], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 700
+            }).addTo(map);
+            L.circle([30.008092, 31.197816], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 700
+            }).addTo(map);
+            L.circle([30.144132, 31.398355], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: 700
+            }).addTo(map);
+            var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+            var results = new L.LayerGroup().addTo(map);
+
+            searchControl.on('results', function (data) {
+                results.clearLayers();
+                for (var i = data.results.length - 1; i >= 0; i--) {
+                    results.addLayer(L.marker(data.results[i].latlng));
+                }
+            });
+
+
+            setTimeout(function () { $('.pointer').fadeOut('slow'); }, 3400);
+        </script>
+    }
+
+
+
+    
+</body>
+</html>

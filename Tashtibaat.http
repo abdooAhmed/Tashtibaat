@@ -1,0 +1,6 @@
+@Tashtibaat_HostAddress = http://localhost:443
+
+GET {{Tashtibaat_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
