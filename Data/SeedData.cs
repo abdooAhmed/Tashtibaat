@@ -1,8 +1,5 @@
 ﻿//using ContactManager.Authorization;
-using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Tashtibaat.Authorization;
 using Tashtibaat.Models;
 
@@ -13,12 +10,7 @@ namespace Tashtibaat.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider, string testUserPw)
         {
-            using var context = new ApplicationDbContext(
-                serviceProvider
-                    .GetRequiredService<DbContextOptions<ApplicationDbContext>>(),
-                serviceProvider
-                    .GetRequiredService<IOptions<OperationalStoreOptions>>()
-            );
+            
             // For sample purposes seed both with the same password.
             // Password is set with the following:
             // dotnet user-secrets set SeedUserPW <pw>

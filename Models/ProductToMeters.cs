@@ -5,6 +5,7 @@
     {
         public int Id { get; set; }
         public int Number { get; set; }
+        public float Total { get; set; }
         public Products Products { get; set; }
     }
 
@@ -12,5 +13,6 @@
     {
         public int Metters { get; set; }
         public int ProductId { get; set; }
+        public float Total { get; set; }
     }
 }

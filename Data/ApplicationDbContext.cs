@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.Extensions.Options;
 using Tashtibaat.Models;
 using Duende.IdentityServer.EntityFramework.Entities;

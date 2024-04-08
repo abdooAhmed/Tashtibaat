@@ -798,9 +798,6 @@ namespace Tashtibaat.Migrations
                     b.Property<int?>("ProductsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<float>("Total")
                         .HasColumnType("real");
 
@@ -873,6 +870,9 @@ namespace Tashtibaat.Migrations
 
                     b.Property<int>("ProductsId")
                         .HasColumnType("int");
+
+                    b.Property<float>("Total")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 

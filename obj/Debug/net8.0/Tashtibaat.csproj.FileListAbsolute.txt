@@ -288,3 +288,4 @@ E:\.net\Tashtibaat\Tashtibaat\bin\Debug\net8.0\MimeKit.dll
 E:\.net\Tashtibaat\Tashtibaat\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
 E:\.net\Tashtibaat\Tashtibaat\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 E:\.net\Tashtibaat\Tashtibaat\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+E:\.net\Tashtibaat\Tashtibaat\obj\Debug\net8.0\Tashtibaat.sourcelink.json

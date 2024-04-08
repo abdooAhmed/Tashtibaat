@@ -22,7 +22,7 @@ namespace Tashtibaat.Helpers
             message.Subject = Subject;
             message.Body = new TextPart("html")
             {
-                Text = $"<a href=\"{Link}\">Verify Email</a>"
+                Text = $"<a href=\"{Link}\">Link</a>"
             };
             using (var client = new SmtpClient())
             {

@@ -1,0 +1,80 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat API Test</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="usernameInput" placeholder="Enter your username">
+        <button onclick="connectToChat()">Connect to Chat</button>
+    </div>
+
+    <div>
+        <input type="text" id="messageInput" placeholder="Type your message">
+        <button onclick="sendMessage()">Send Message</button>
+    </div>
+
+    <ul id="messagesList"></ul>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@3.1.9/dist/browser/signalr.min.js"></script>
+    <script>
+        // app.js
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chathup", {
+                accessTokenFactory: () => getJwtToken()
+            })
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        connection.on("ReceiveMessage", (user, message) => {
+            const messagesList = document.getElementById("messagesList");
+            const listItem = document.createElement("li");
+            listItem.textContent = `${user}: ${message}`;
+            messagesList.appendChild(listItem);
+        });
+
+        function connectToChat() {
+            const usernameInput = document.getElementById("usernameInput");
+            const username = usernameInput.value.trim();
+
+            if (username) {
+                connection.start().then(() => {
+                    console.log(connection);
+                    connection.invoke("JoinChat", username);
+                });
+            } else {
+                alert("Please enter a valid username.");
+            }
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value.trim();
+
+            if (message) {
+                connection.invoke("SendMessage","Abdo38", message);
+                messageInput.value = "";
+            }
+        }
+
+        function getJwtToken() {
+            // Implement a function to fetch the JWT token
+            // Return the user's token for authentication
+            return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBYmRvMzg4IiwianRpIjoiYjk5MjA4NWQtN2Y2Ni00OTVhLTg2MWEtMTM4M2EyMjBkYzUzIiwiZW1haWwiOiJhYmRvby5haG1lZDM4QGljbG91ZC5jb20iLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MDUzIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA1MyIsInVpZCI6IjhhODUyODBiLWVlN2QtNGZjYi1hOWIxLTdhNDcxYzViOTFjYSIsInJvbGUiOiJDbGllbnQiLCJuYmYiOjE3MDg0MDAzMzgsImV4cCI6MTcwODQyMTkzOCwiaWF0IjoxNzA4NDAwMzM4fQ.y1WFKNIp8u0BlrgeRxXIZeQTijBx8bk7vLkB1GzDv_w"
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+

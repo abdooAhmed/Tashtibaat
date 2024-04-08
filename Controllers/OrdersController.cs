@@ -26,10 +26,18 @@ namespace Tashtibaat.Controllers
         }
 
         // GET: api/Orders
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public async Task<IActionResult> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            return Ok(
+                new
+                {
+                    Data = await _context.Orders.Select(x => new { x.Users.UserName, x.Cash, x.Bank, x.Total, x.Address, ProductToMeters = x.ProductToMeters.Select(y => new { y.Products.Name, y.Total, Meters = y.Number }).ToList() }).ToListAsync(),
+                    Status = true,
+                    Message = "Success"
+                }
+                );
         }
 
         // GET: api/Orders/5
@@ -103,7 +111,6 @@ namespace Tashtibaat.Controllers
             var order = new Order
             {
                 Total = dto.Total,
-                Quantity = dto.Quantity,
                 Bank = dto.Bank,
                 Cash = dto.Cash,
                 Address = dto.Address,

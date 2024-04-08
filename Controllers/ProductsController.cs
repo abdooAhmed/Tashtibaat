@@ -66,8 +66,9 @@ namespace Tashtibaat.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProducts(int id, ProductDto dto)
         {
-            var products = new Products { Id = dto.Id,MinimumPrice = dto.MinimumPrice,MaximumPrice=dto.MaximumPrice,Name = dto.Name,
-                Picture = FileHelper.UploadedFile(dto.Picture, _webHostEnvironment.WebRootPath, "TODO: fix ngrok to get a fixed domain", "Products")
+            var currentPic = await _context.Products.Where(x => x.Id == id).Select(x=>x.Picture).FirstOrDefaultAsync();
+            var products = new Products { Id = id,MinimumPrice = dto.MinimumPrice,MaximumPrice=dto.MaximumPrice,Name = dto.Name,
+                Picture = dto.Picture != null ? FileHelper.UploadedFile(dto.Picture, _webHostEnvironment.WebRootPath, "TODO: fix ngrok to get a fixed domain", "Products"): currentPic
             };
             if (id != products.Id)
             {
@@ -94,7 +95,7 @@ namespace Tashtibaat.Controllers
 
             return Ok(new
             {
-                Data = new {dto.MinimumPrice,dto.MaximumPrice,dto.Name,products.Picture},
+                Data = new {products.Id,dto.MinimumPrice,dto.MaximumPrice,dto.Name,products.Picture},
                 Status = true,
                 Message = "Success"
             });
@@ -131,7 +132,22 @@ namespace Tashtibaat.Controllers
                 };
                 _context.Products.Add(products);
                 await _context.SaveChangesAsync();
-            }catch (Exception ex)
+                return Ok(new
+                {
+                    Data = new
+                    {
+                        products.Id,
+                        productDto.Name,
+                        productDto.MinimumPrice,
+                        productDto.MaximumPrice,
+                        products.Picture,
+
+                    },
+                    Status = true,
+                    Message = "Success"
+                });
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new
                 {
@@ -144,25 +160,93 @@ namespace Tashtibaat.Controllers
                 });
             }
 
-            return Ok(new
-            {
-                Data = new
-                {
-                    
-                },
-                Status = true,
-                Message = "Success"
-            });
         }
 
 
         [HttpGet("Categories")]
         public async Task<IActionResult> GetProductsCategory()
         {
-            var categories = await _context.ProductCategories.Select(x=> new {x.Id,x.Name,x.Picture}).ToListAsync();
+            var categories = await _context.ProductCategories.Select(x=> new {x.Id,x.Name,x.Picture,Products = x.Products.Select(p => p.Name).Take(3) }).ToListAsync();
             return Ok(new
             {
                 Data = categories,
+                Status = true,
+                Message = "Success"
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        // DELETE: api/Products/5
+        [HttpDelete("Category/{id}")]
+        public async Task<IActionResult> DeleteProductsCategory(int id)
+        {
+            var products = await _context.ProductCategories.FindAsync(id);
+            if (products == null)
+            {
+                return NotFound(new
+                {
+
+                    Data = new
+                    {
+
+                    },
+                    Status = false,
+                    Message = "Category not found"
+                });
+            }
+
+            _context.ProductCategories.Remove(products);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                Data = new
+                {
+
+                },
+                Status = true,
+                Message = "Success"
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("Category/{id}")]
+        public async Task<IActionResult> PutProductsCategory(int id, CategoryDto categoryDto)
+        {
+            var currentPic = await _context.ProductCategories.Where(x=>x.Id== id).Select(x=>x.Picture).FirstOrDefaultAsync();
+            var category = new ProductsCategory
+            {
+                Id = id,
+                Name = categoryDto.Name,
+                Picture = categoryDto.Picture != null ? FileHelper.UploadedFile(categoryDto.Picture, _webHostEnvironment.WebRootPath, "TODO: fix ngrok to get a fixed domain", "Category") : currentPic
+
+            };
+            if (id != category.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(category).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductsExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(new
+            {
+                Data = new {category.Id, categoryDto.Name, category.Picture },
                 Status = true,
                 Message = "Success"
             });
@@ -183,15 +267,13 @@ namespace Tashtibaat.Controllers
 
             return Ok(new
             {
-                Data = new
-                {
-
-                },
+                Data = new { category.Name,category.Picture,category.Id},
                 Status = true,
                 Message = "Success"
             });
         }
 
+        [Authorize(Roles = "Admin")]
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducts(int id)
@@ -199,13 +281,30 @@ namespace Tashtibaat.Controllers
             var products = await _context.Products.FindAsync(id);
             if (products == null)
             {
-                return NotFound();
+                return NotFound(new
+                {
+
+                    Data = new
+                    {
+
+                    },
+                    Status = false,
+                    Message = "Product not found"
+                });
             }
 
             _context.Products.Remove(products);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new
+            {
+                Data = new
+                {
+
+                },
+                Status = true,
+                Message = "Success"
+            });
         }
 
         private bool ProductsExists(int id)

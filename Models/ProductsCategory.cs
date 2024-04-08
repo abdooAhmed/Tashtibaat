@@ -12,6 +12,6 @@
     public class CategoryDto
     {
         public string Name { set; get; }
-        public IFormFile Picture { get; set; }
+        public IFormFile? Picture { get; set; }
     }
 }

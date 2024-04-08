@@ -288,3 +288,4 @@ E:\.net\Tashtibaat\Tashtibaat\obj\Release\net8.0\refint\Tashtibaat.dll
 E:\.net\Tashtibaat\Tashtibaat\obj\Release\net8.0\Tashtibaat.pdb
 E:\.net\Tashtibaat\Tashtibaat\obj\Release\net8.0\Tashtibaat.genruntimeconfig.cache
 E:\.net\Tashtibaat\Tashtibaat\obj\Release\net8.0\ref\Tashtibaat.dll
+E:\.net\Tashtibaat\Tashtibaat\obj\Release\net8.0\Tashtibaat.sourcelink.json

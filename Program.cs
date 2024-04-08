@@ -35,10 +35,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "_allowAll",
         builder =>
         {
-            builder.AllowAnyOrigin()
+            builder
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .SetPreflightMaxAge(TimeSpan.FromMinutes(10));
+            
+            .SetPreflightMaxAge(TimeSpan.FromMinutes(10))
+            .AllowCredentials();
         });
 });
 
@@ -66,11 +68,36 @@ builder.Services.AddAuthentication(options =>
             builder.Configuration["Jwt:Key"]
             ))
     };
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+
+            // If the request is for our hub...
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) &&
+                (path.StartsWithSegments("/chatHup")))
+            {
+                // Read the token out of the query string
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
+});
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("SignalRPolicy", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+    });
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddMvc();
 var app = builder.Build();
 
@@ -92,7 +119,7 @@ app.UseStaticFiles();
 app.UseCors("_allowAll");
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapHub<ChatHub>("/chatHup");
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",

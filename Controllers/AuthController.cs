@@ -14,6 +14,7 @@ using Tashtibaat.Helpers;
 using MimeKit;
 using System.Security.Authentication;
 using MailKit.Net.Smtp;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -247,7 +248,7 @@ namespace Tashtibaat.Controllers
                                 Token = token,
                                 Status = "Authenticated",
                                 RefreshToken = refresh,
-                                Role= Role.FirstOrDefault()
+                                IsAdmin= (Role.FirstOrDefault() == "Admin" ? true : false) 
                             },
                             Status = true,
                             Message = "Success"

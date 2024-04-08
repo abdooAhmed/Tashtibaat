@@ -13,10 +13,9 @@
 
     public class ProductDto
     {
-        public int Id { get; set; } = 0;
         public string Name { set; get; }
         public int CategoryId {  get; set; }
-        public IFormFile Picture { get; set; }
+        public IFormFile? Picture { get; set; }
         public int MinimumPrice { get; set; }
         public int MaximumPrice { get; set; }
     }
