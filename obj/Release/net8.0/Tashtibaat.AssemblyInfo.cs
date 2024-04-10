@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Tashtibaat")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74cda80d31535071b3c93fccbf0acafac3d250ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fe896f5bfd12c57000ae84ff99cdaddc1c97b6c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Tashtibaat")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Tashtibaat")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

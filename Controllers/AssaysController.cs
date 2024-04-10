@@ -121,7 +121,14 @@ namespace Tashtibaat.Controllers
 
             return Ok(new
             {
-                Data = new { },
+                Data = new {
+                    Id = assay.Id,
+                    Description = assayDto.Description,
+                    MaximumPrice = assayDto.MaximumPrice,
+                    MinimumPrice = assayDto.MinimumPrice,
+                    Name = assayDto.Name,
+                    Unit = assayDto.Unit,
+                },
                 Status = true,
                 Message = "Success"
             });

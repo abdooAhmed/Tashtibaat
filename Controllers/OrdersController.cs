@@ -33,7 +33,7 @@ namespace Tashtibaat.Controllers
             return Ok(
                 new
                 {
-                    Data = await _context.Orders.Select(x => new { x.Users.UserName, x.Cash, x.Bank, x.Total, x.Address, ProductToMeters = x.ProductToMeters.Select(y => new { y.Products.Name, y.Total, Meters = y.Number }).ToList() }).ToListAsync(),
+                    Data = await _context.Orders.Select(x => new { x.Users.UserName, x.Cash, x.Bank, x.Total, x.Address, ProductToMeters = x.ProductToMeters.Select(y => new { y.Products.Name, y.Total, Quantity = y.Quantity }).ToList() }).ToListAsync(),
                     Status = true,
                     Message = "Success"
                 }
@@ -106,7 +106,7 @@ namespace Tashtibaat.Controllers
                         Message = "عليك اختيار منتج"
                     });
                 }
-                ProductToMeters.Add(new ProductToMeters { Products = product, Number = i.Metters });
+                ProductToMeters.Add(new ProductToMeters { Products = product, Quantity = i.Quantity });
             }
             var order = new Order
             {
@@ -169,7 +169,7 @@ namespace Tashtibaat.Controllers
                         Message = "عليك اختيار منتج"
                     });
                 }
-                AssayToMeters.Add(new AssayToMeters { Assay = assay, Number = i.Metters });
+                AssayToMeters.Add(new AssayToMeters { Assay = assay, Quantity = i.Quantity });
             }
             var assayOrder = new AssayOrder
             {

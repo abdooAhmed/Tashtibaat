@@ -379,7 +379,7 @@ namespace Tashtibaat.Controllers
                     new Claim(JwtRegisteredClaimNames.Aud, _configuration["Jwt:Audience"].ToString()),
                     new Claim("uid", user.Id)
                 }),
-                Expires = DateTime.UtcNow.AddHours(6),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = signingCredentials
             };
 
@@ -480,7 +480,7 @@ namespace Tashtibaat.Controllers
             var tokenDes = new SecurityTokenDescriptor
             {
                 Subject = InputClaims,
-                Expires = DateTime.UtcNow.AddHours(6),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = signinCredentials
 
             };

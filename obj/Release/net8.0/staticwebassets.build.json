@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SBloYE+0LNEU2ai21ja86wlQuUp7eaMXOOAHd7IqEcU=",
+  "Hash": "bKFCSheU03SNcRmr2+6H+iw54/rdxKTyOQNkRaCZ018=",
   "Source": "Tashtibaat",
   "BasePath": "_content/Tashtibaat",
   "Mode": "Default",
@@ -395,6 +395,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Category\\6b3b7e7e-b325-4fc3-90d0-804b3954ddd1_515Tx+6JLuL._AC_SL1000_.jpg"
+    },
+    {
+      "Identity": "E:\\.net\\Tashtibaat\\Tashtibaat\\wwwroot\\images\\Category\\6b641ce3-0526-4134-a846-9b7ca7618bd8_download (2).jpg",
+      "SourceId": "Tashtibaat",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\.net\\Tashtibaat\\Tashtibaat\\wwwroot\\",
+      "BasePath": "_content/Tashtibaat",
+      "RelativePath": "images/Category/6b641ce3-0526-4134-a846-9b7ca7618bd8_download (2).jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Category\\6b641ce3-0526-4134-a846-9b7ca7618bd8_download (2).jpg"
     },
     {
       "Identity": "E:\\.net\\Tashtibaat\\Tashtibaat\\wwwroot\\images\\Category\\7440abad-ad4b-4090-adae-2f993c45dd2f_515Tx+6JLuL._AC_SL1000_.jpg",

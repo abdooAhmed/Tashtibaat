@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tashtibaat.Data;
 
@@ -11,9 +12,11 @@ using Tashtibaat.Data;
 namespace Tashtibaat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240409001951_updateProductMettersType")]
+    partial class updateProductMettersType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -420,11 +423,11 @@ namespace Tashtibaat.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("MaximumPrice")
-                        .HasColumnType("real");
+                    b.Property<int>("MaximumPrice")
+                        .HasColumnType("int");
 
-                    b.Property<float>("MinimumPrice")
-                        .HasColumnType("real");
+                    b.Property<int>("MinimumPrice")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -488,8 +491,8 @@ namespace Tashtibaat.Migrations
                     b.Property<int?>("AssayOrderId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Quantity")
-                        .HasColumnType("real");
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -862,14 +865,14 @@ namespace Tashtibaat.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<float>("Metters")
+                        .HasColumnType("real");
+
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductsId")
                         .HasColumnType("int");
-
-                    b.Property<float>("Quantity")
-                        .HasColumnType("real");
 
                     b.Property<float>("Total")
                         .HasColumnType("real");
